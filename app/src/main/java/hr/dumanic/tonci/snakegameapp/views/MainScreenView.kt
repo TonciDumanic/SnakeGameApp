@@ -15,10 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import hr.dumanic.tonci.snakegameapp.constants.DEFAULT_PLAYER_NAME
 import hr.dumanic.tonci.snakegameapp.enums.SnakeGameAppScreen
+import hr.dumanic.tonci.snakegameapp.playerName
 
 
 @Composable
@@ -74,12 +73,13 @@ fun MainScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                var valueOfNameTextField by remember { mutableStateOf("MightySneaker1") }
+                var valueOfNameTextField by remember { mutableStateOf(DEFAULT_PLAYER_NAME) }
 
                 OutlinedTextField(
 
                     value = valueOfNameTextField,
-                    onValueChange = { valueOfNameTextField = it },
+                    onValueChange = { valueOfNameTextField = it
+                                    playerName = valueOfNameTextField},
                     singleLine = true,
                     label = { Text("Please enter your name:") }
                 )

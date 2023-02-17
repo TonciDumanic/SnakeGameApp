@@ -7,23 +7,32 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import hr.dumanic.tonci.snakegameapp.enums.SnakeGameAppScreen
+import hr.dumanic.tonci.snakegameapp.game.Game
+import hr.dumanic.tonci.snakegameapp.playerName
+import java.time.LocalDateTime
 
 
 @Composable
 fun GamePlayScreen(navController: NavController) {
 
-    Surface(modifier = Modifier.fillMaxSize(), color = Color.Red ){
+    var myGame = Game(
+        playerName,
+        LocalDateTime.now(),
+        LocalDateTime.now().plusMinutes((1..5).random().toLong()),
+        (0..77).random()
+    )
+
+    Surface(modifier = Modifier.fillMaxSize()) {
 
 
-        Row(modifier = Modifier.fillMaxSize() ) {
-            Text("This is gameplay screen")
+        Row(modifier = Modifier.fillMaxSize()) {
+
+            Text("This is gameplay screen Game: $myGame")
+
+
+
+
 
             Button(onClick = { navController.popBackStack() }) {
                 Text("Back")

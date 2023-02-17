@@ -2,5 +2,5 @@ package hr.dumanic.tonci.snakegameapp.game
 
 import java.time.LocalDateTime
 
-class Game(playerName:String,startTime: LocalDateTime,score:Int) {
+data class Game(val playerName:String, val startTime: LocalDateTime, var endTime: LocalDateTime, var score:Int) {
 }

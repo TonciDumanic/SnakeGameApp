@@ -3,77 +3,57 @@ package hr.dumanic.tonci.snakegameapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import hr.dumanic.tonci.snakegameapp.enums.SnakeGameAppScreen
 import hr.dumanic.tonci.snakegameapp.ui.theme.SnakeGameAppTheme
+import hr.dumanic.tonci.snakegameapp.views.GamePlayScreen
+import hr.dumanic.tonci.snakegameapp.views.MainScreen
+import hr.dumanic.tonci.snakegameapp.views.ScoresScreen
+import hr.dumanic.tonci.snakegameapp.views.SettingsScreen
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContent {
-            SnakeGameAppTheme {
+            setContent {
+                AppNavigation()
             }
         }
     }
 }
 
 @Composable
-fun MainScreen() {
-
-    // A surface container using the 'background' color from the theme
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colors.background
-    ) {
-        Column( modifier = Modifier.padding(top = 10.dp,
-                                            bottom = 10.dp,
-                                            end = 10.dp,
-                                            start = 10.dp),
-            verticalArrangement = Arrangement.Top) {
-
-
-            Text(
-                text = "MIGHTY SNAKE",
-                modifier = Modifier
-                    .padding(5.dp)
-                    .align(CenterHorizontally),
-                style = TextStyle(
-                    fontSize = 40.sp,
-                    shadow = Shadow(
-                        color = Color.Red,
-                        blurRadius = 3f
-                    )))
-
-
-            Column(Modifier.padding(top=30.dp,end = 10.dp,start = 10.dp),verticalArrangement = Arrangement.SpaceEvenly) {
-
-                TextField(value = "Enter your name...", modifier = Modifier.align(CenterHorizontally), onValueChange = {})
-
-                Button(modifier = Modifier.padding(top = 10.dp).align(CenterHorizontally),onClick = { /*TODO*/ }) {
-                    Text("New game")
-                }
-                Button(modifier = Modifier.padding(top = 10.dp).align(CenterHorizontally),onClick = { /*TODO*/ }) {
-                    Text("Scores")
-
-                }
+fun AppNavigation() {
+    val navController: NavHostController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = SnakeGameAppScreen.Main.name,
+        modifier = Modifier,
+        builder = {
+            composable(route = SnakeGameAppScreen.Main.name) { MainScreen(navController) }
+            composable(route = SnakeGameAppScreen.GamePlay.name) {
+                GamePlayScreen(
+                    navController
+                )
             }
-
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MainScreen()
+            composable(route = SnakeGameAppScreen.Scores.name) {
+                ScoresScreen(
+                    navController
+                )
+            }
+            composable(route = SnakeGameAppScreen.Settings.name) {
+                SettingsScreen(
+                    navController
+                )
+            }
+        })
 
 }
